@@ -32,5 +32,13 @@ namespace Bank.Controllers
             _account.Deposit(_value);
             return _account.Balance;
         }
+
+        [HttpPost("withdraw")]
+        public double Withdraw([FromBody] string value)
+        {
+            double _value = Convert.ToDouble(value);
+            _account.Withdraw(_value);
+            return _account.Balance;
+        }
     }
 }

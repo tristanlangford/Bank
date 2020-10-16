@@ -36,6 +36,14 @@ namespace Bank_Tech_Test_C_Unit_Tests
         }
 
         [Fact]
+        public void MulitpleDepositsIncreasesBalance()
+        {
+            account.Deposit(30);
+            account.Deposit(20);
+            Assert.Equal(50, account.Balance);
+        }
+
+        [Fact]
         public void DepositWithMinusErrors()
         {
             var err = Assert.Throws<InvalidOperationException>(() => account.Deposit(-10));

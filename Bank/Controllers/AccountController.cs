@@ -13,15 +13,23 @@ namespace Bank.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        IAccount _account;
-        public AccountController()
+        private readonly IAccount _account;
+        public AccountController(IAccount account)
         {
-            _account = new Account();
+            _account = account;
         }
 
         [HttpGet]
         public double Get()
         {
+            return _account.Balance;
+        }
+
+        [HttpPost("deposit")]
+        public double Deposit([FromBody] string value)
+        {
+            double _value = Convert.ToDouble(value);
+            _account.Deposit(_value);
             return _account.Balance;
         }
     }

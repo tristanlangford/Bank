@@ -4,7 +4,7 @@ using Bank.Models.Interfaces;
 
 namespace Bank.Models
 {
-    public class Account
+    public class Account : IAccount
     {
         public double Balance
         { get; private set; }

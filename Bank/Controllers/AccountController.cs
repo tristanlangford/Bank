@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Bank.Models.Interfaces;
+using Bank.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Bank.Controllers
@@ -11,11 +13,16 @@ namespace Bank.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
+        IAccount _account;
+        public AccountController()
+        {
+            _account = new Account();
+        }
 
         [HttpGet]
-        public int Get()
+        public double Get()
         {
-            return 10;
+            return _account.Balance;
         }
     }
 }

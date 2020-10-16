@@ -9,6 +9,7 @@ export class Account extends Component {
             loading: true,
             depositValue: 0,
             withdrawValue: 0,
+            statement: "",
         };
 
         this.setDepositValue = this.setDepositValue.bind(this);
@@ -18,7 +19,9 @@ export class Account extends Component {
     }
 
     componentDidMount() {
+        this.getStatement();
         this.getBalance();
+        
     }
 
     setDepositValue(event) {
@@ -29,7 +32,7 @@ export class Account extends Component {
         this.setState({ withdrawValue: event.target.value })
     }
 
-    renderAccount(balance) {
+    renderAccount(balance, statement) {
         return (
             <div>
                 <div>Balance: {balance}</div>
@@ -41,6 +44,9 @@ export class Account extends Component {
                 <input type="number" onChange={this.setWithdrawValue} min='0.01' pattern="^\d*(\.\d{0,2})?$" value={this.state.withdrawValue} />
                     <button value="Confirm" onClick={this.withdraw} value={this.state.withdrawValue}>Confirm</button>
                 </div>
+                <div>
+                    <span>{statement}</span>
+                </div>
             </div>
         );
     }
@@ -48,7 +54,7 @@ export class Account extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Getting Account Details...</em></p>
-            : this.renderAccount(this.state.balance);
+            : this.renderAccount(this.state.balance, this.state.statement);
 
         return (
             <div>
@@ -67,6 +73,7 @@ export class Account extends Component {
         const response = await fetch('account/deposit', requestOptions);
         const data = await response.json();
         this.setState({ balance: data, depositValue: 0 });
+        this.getStatement()
     }
 
     async withdraw(event) {
@@ -78,11 +85,19 @@ export class Account extends Component {
         const response = await fetch('account/withdraw', requestOptions);
         const data = await response.json();
         this.setState({ balance: data, withdrawValue: 0 });
+        this.getStatement()
     }
 
     async getBalance() {
         const response = await fetch('account');
         const data = await response.json();
         this.setState({ balance: data, loading: false });
+    }
+
+    async getStatement() {
+        const response = await fetch('account/statement');
+        const data = await response.json();
+        console.log(data[0])
+        this.setState({ statement: data[0] });
     }
 }

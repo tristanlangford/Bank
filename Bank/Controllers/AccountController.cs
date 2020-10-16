@@ -40,5 +40,11 @@ namespace Bank.Controllers
             _account.Withdraw(_value);
             return _account.Balance;
         }
+
+        [HttpGet("statement")]
+        public List<string> Statement()
+        {
+            return new List<string> { _account.Statement() };
+        }
     }
 }

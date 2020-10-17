@@ -32,6 +32,14 @@ export class Account extends Component {
         this.setState({ withdrawValue: event.target.value })
     }
 
+    formatStatement(statement) {
+        var formattedStatement = []
+        for (let x = 0; x < statement.length; x++) {
+            formattedStatement.push(<div>{statement[x]}</div>)
+        }
+        return formattedStatement
+    }
+
     renderAccount(balance, statement) {
         return (
             <div>
@@ -45,7 +53,7 @@ export class Account extends Component {
                     <button value="Confirm" onClick={this.withdraw} value={this.state.withdrawValue}>Confirm</button>
                 </div>
                 <div>
-                    <span>{statement}</span>
+                    <span>{this.formatStatement(statement)}</span>
                 </div>
             </div>
         );
@@ -97,7 +105,6 @@ export class Account extends Component {
     async getStatement() {
         const response = await fetch('account/statement');
         const data = await response.json();
-        console.log(data[0])
-        this.setState({ statement: data[0] });
+        this.setState({ statement: data });
     }
 }

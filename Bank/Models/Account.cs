@@ -49,7 +49,7 @@ namespace Bank.Models
             }
         }
 
-        public string Statement()
+        public List<string> Statement()
         {
             return _printStatement.Print(history);
         }

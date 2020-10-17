@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace Bank.Models.Interfaces
 {
     public interface IAccount
@@ -10,6 +11,6 @@ namespace Bank.Models.Interfaces
 
         public void Withdraw(double value);
 
-        public string Statement();
+        public List<string> Statement();
     }
 }

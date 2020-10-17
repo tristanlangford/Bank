@@ -44,7 +44,7 @@ namespace Bank.Controllers
         [HttpGet("statement")]
         public List<string> Statement()
         {
-            return new List<string> { _account.Statement() };
+            return _account.Statement();
         }
     }
 }

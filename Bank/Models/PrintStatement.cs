@@ -8,21 +8,21 @@ namespace Bank.Models
     {
         private const string Title = "date || credit || debit || balance";
 
-        public string Print(List<IInteraction> history)
+        public List<string> Print(List<IInteraction> history)
         {
-            string statement = Title;
-            foreach(IInteraction i in history)
+            List<string> Statement = new List<string> { Title };
+            foreach (IInteraction i in history)
             {
                 if (GetValue(i) > 0)
                 {
-                    statement += "\n" + PrintDeposit(i);
+                    Statement.Add(PrintDeposit(i));
                 }
                 else
                 {
-                    statement += "\n" + PrintWithdrawal(i);
+                    Statement.Add(PrintWithdrawal(i));
                 }
             }
-            return statement;
+            return Statement;
         }
 
         private double GetValue(IInteraction interaction)

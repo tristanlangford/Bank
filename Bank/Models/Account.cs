@@ -18,7 +18,7 @@ namespace Bank.Models
         public List<IInteraction> history = new List<IInteraction>();
         public IPrintStatement _printStatement;
 
-        public Account(int Id, string Name = "", IPrintStatement printStatement = null)
+        public Account(int Id, string Name, IPrintStatement printStatement = null)
         {
             _Id = Id;
             _Name = Name;

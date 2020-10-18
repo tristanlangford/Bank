@@ -7,6 +7,12 @@ namespace Bank.Models.Interfaces
         public double Balance
         { get; }
 
+        public string _Name
+        { get; }
+
+        public int _Id
+        { get; }
+
         public void Deposit(double value);
 
         public void Withdraw(double value);

@@ -20,17 +20,24 @@ namespace Bank.Controllers
         }
 
         [HttpGet]
-        public double Get()
+        public IActionResult Get()
         {
-            return _account.Balance;
+            return Ok(_account.Balance);
         }
 
         [HttpPost("deposit")]
-        public double Deposit([FromBody] string value)
+        public IActionResult Deposit([FromBody] string value)
         {
             double _value = Convert.ToDouble(value);
-            _account.Deposit(_value);
-            return _account.Balance;
+            if(_value > 0.00)
+            {
+                _account.Deposit(_value);
+                return Ok(_account.Balance);
+            } else
+            {
+                return Ok(null);
+            }
+            
         }
 
         [HttpPost("withdraw")]

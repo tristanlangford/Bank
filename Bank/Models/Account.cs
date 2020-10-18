@@ -9,11 +9,20 @@ namespace Bank.Models
         public double Balance
         { get; private set; }
 
+        public string _Name
+        { get; private set; }
+
+        public int _Id
+        { get; private set; }
+
         public List<IInteraction> history = new List<IInteraction>();
         public IPrintStatement _printStatement;
 
-        public Account(IPrintStatement printStatement = null)
+        public Account(int Id, string Name = "", IPrintStatement printStatement = null)
         {
+            _Id = Id;
+            _Name = Name;
+
             Balance = 0;
             if (printStatement == null)
             {

@@ -19,7 +19,7 @@ namespace Bank_Tech_Test_C_Unit_Tests
             historyMock = new List<IInteraction>();
             printStatement.Setup(p => p.Print(historyMock));
 
-            account = new Account(printStatement.Object);
+            account = new Account(1, "Personal", printStatement.Object);
         }
 
         [Fact]

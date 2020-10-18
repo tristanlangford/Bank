@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import './Account.css'
 
 export class Account extends Component {
 
@@ -21,7 +22,6 @@ export class Account extends Component {
     componentDidMount() {
         this.getStatement();
         this.getBalance();
-        
     }
 
     setDepositValue(event) {
@@ -33,9 +33,12 @@ export class Account extends Component {
     }
 
     formatStatement(statement) {
-        var formattedStatement = []
+        var formattedStatement = [];
         for (let x = 0; x < statement.length; x++) {
-            formattedStatement.push(<div>{statement[x]}</div>)
+            var brokenLine = statement[x].split("||");
+            var tableRow = []
+            brokenLine.forEach(i => tableRow.push(<td> {i}</td >));
+            formattedStatement.push(<tr>{tableRow}</tr>)
         }
         return formattedStatement
     }
@@ -43,17 +46,23 @@ export class Account extends Component {
     renderAccount(balance, statement) {
         return (
             <div>
-                <div>Balance: {balance}</div>
-                <div>Make a Deposit:
-                <input type="number" onChange={this.setDepositValue} min='0.01' pattern="^\d*(\.\d{0,2})?$" value={this.state.depositValue}/>
-                    <button value="Confirm" onClick={this.deposit} value={this.state.depositValue}>Confirm</button>
-                </div>
-                <div>Make a Withdrawal:
-                <input type="number" onChange={this.setWithdrawValue} min='0.01' pattern="^\d*(\.\d{0,2})?$" value={this.state.withdrawValue} />
-                    <button value="Confirm" onClick={this.withdraw} value={this.state.withdrawValue}>Confirm</button>
-                </div>
+                <div className="balance">Balance: £{balance}</div>
+                <div className="actions">
+                    <span className="deposit">Deposit: 
+                            <input type="number" onChange={this.setDepositValue} min='0' pattern="^\d*(\.\d{0,2})?$" value={this.state.depositValue}/>
+                            <button value="Confirm" onClick={this.deposit} value={this.state.depositValue}>Confirm</button>
+                    </span>
+                    <span className="withdraw">Withdraw: 
+                            <input type="number" onChange={this.setWithdrawValue} min='0' pattern="^\d*(\.\d{0,2})?$" value={this.state.withdrawValue} />
+                            <button value="Confirm" onClick={this.withdraw} value={this.state.withdrawValue}>Confirm</button>
+                        </span>
+                    </div>
                 <div>
-                    <span>{this.formatStatement(statement)}</span>
+                    <table>
+                        <tbody>
+                            {this.formatStatement(statement)}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         );
@@ -65,7 +74,7 @@ export class Account extends Component {
             : this.renderAccount(this.state.balance, this.state.statement);
 
         return (
-            <div>
+            <div className="account-container">
                 <h1 id="tabelLabel" >Your Bank Account</h1>
                 {contents}
             </div>

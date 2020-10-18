@@ -10,6 +10,7 @@ export class Account extends Component {
             Loading: true,
             value: 0,
         };
+
         this.withdrawal = this.withdrawal.bind(this)
         this.deposit = this.deposit.bind(this)
     }
@@ -57,14 +58,14 @@ export class Account extends Component {
                 <h1>Account: {account._Name}</h1>
                 <div className="balance">Balance: £{account.balance}</div>
                 <div className="actions">
-                    <span className="deposit">Deposit: 
-                            <button value="Confirm" onClick={this.deposit}>Confirm</button>
+                    <span className="deposit"> 
+                            <button onClick={this.deposit}>Deposit</button>
                     </span>
                     <span>
                         <input type="number" min='0' onChange={event => this.setState({ value: event.target.value })} />
                     </span>
-                    <span className="withdraw">Withdraw:
-                            <button value="Confirm" onClick={this.withdrawal}>Confirm</button>
+                    <span className="withdraw">
+                            <button onClick={this.withdrawal}>Withdraw</button>
                     </span>
                     </div>
                 <div>

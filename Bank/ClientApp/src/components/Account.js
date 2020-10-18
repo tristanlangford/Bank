@@ -6,30 +6,14 @@ export class Account extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            balance: 0,
-            loading: true,
-            depositValue: 0,
-            withdrawValue: 0,
-            statement: "",
+            Account: null,
+            Loading: true,
         };
 
-        this.setDepositValue = this.setDepositValue.bind(this);
-        this.deposit = this.deposit.bind(this);
-        this.setWithdrawValue = this.setWithdrawValue.bind(this);
-        this.withdraw = this.withdraw.bind(this);
     }
 
     componentDidMount() {
-        this.getStatement();
-        this.getBalance();
-    }
-
-    setDepositValue(event) {
-        this.setState({ depositValue: event.target.value })
-    }
-
-    setWithdrawValue(event) {
-        this.setState({ withdrawValue: event.target.value })
+        this.getAccount()
     }
 
     formatStatement(statement) {
@@ -43,24 +27,24 @@ export class Account extends Component {
         return formattedStatement
     }
 
-    renderAccount(balance, statement) {
+    renderAccount() {
         return (
             <div>
-                <div className="balance">Balance: £{balance}</div>
+                <div className="balance">Balance: £</div>
                 <div className="actions">
                     <span className="deposit">Deposit: 
-                            <input type="number" onChange={this.setDepositValue} min='0' />
-                            <button value="Confirm" onClick={this.deposit} >Confirm</button>
+                            <input type="number" min='0' />
+                            <button value="Confirm" >Confirm</button>
                     </span>
                     <span className="withdraw">Withdraw: 
-                            <input type="number" onChange={this.setWithdrawValue} min='0' />
-                            <button value="Confirm" onClick={this.withdraw} >Confirm</button>
+                            <input type="number" min='0' />
+                            <button value="Confirm" >Confirm</button>
                         </span>
                     </div>
                 <div>
                     <table>
                         <tbody>
-                            {this.formatStatement(statement)}
+
                         </tbody>
                     </table>
                 </div>
@@ -69,9 +53,9 @@ export class Account extends Component {
     }
 
     render() {
-        let contents = this.state.loading
+        let contents = this.state.Loading
             ? <p><em>Getting Account Details...</em></p>
-            : this.renderAccount(this.state.balance, this.state.statement);
+            : this.renderAccount();
 
         return (
             <div className="account-container">
@@ -81,39 +65,46 @@ export class Account extends Component {
         );
     }
 
-    async deposit(event) {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.state.depositValue)
-        };
-        const response = await fetch('account/deposit', requestOptions);
+    async getAccount() {
+        var id = this.props.match.params.id
+        const response = await fetch(`accountslist/${id}`);
         const data = await response.json();
-        this.setState({ balance: data, depositValue: 0 });
-        this.getStatement()
+        console.log(data)
+        this.setState({ Account: data, Loading: false });
     }
+    //async deposit(event) {
+    //    const requestOptions = {
+    //        method: 'POST',
+    //        headers: { 'Content-Type': 'application/json' },
+    //        body: JSON.stringify(this.state.depositValue)
+    //    };
+    //    const response = await fetch('account/deposit', requestOptions);
+    //    const data = await response.json();
+    //    this.setState({ balance: data, depositValue: 0 });
+    //    this.getStatement()
+    //}
 
-    async withdraw(event) {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.state.withdrawValue)
-        };
-        const response = await fetch('account/withdraw', requestOptions);
-        const data = await response.json();
-        this.setState({ balance: data, withdrawValue: 0 });
-        this.getStatement()
-    }
+    //async withdraw(event) {
+    //    const requestOptions = {
+    //        method: 'POST',
+    //        headers: { 'Content-Type': 'application/json' },
+    //        body: JSON.stringify(this.state.withdrawValue)
+    //    };
+    //    const response = await fetch('account/withdraw', requestOptions);
+    //    const data = await response.json();
+    //    this.setState({ balance: data, withdrawValue: 0 });
+    //    this.getStatement()
+    //}
 
-    async getBalance() {
-        const response = await fetch('account');
-        const data = await response.json();
-        this.setState({ balance: data, loading: false });
-    }
+    //async getBalance() {
+    //    const response = await fetch('account');
+    //    const data = await response.json();
+    //    this.setState({ balance: data, loading: false });
+    //}
 
-    async getStatement() {
-        const response = await fetch('account/statement');
-        const data = await response.json();
-        this.setState({ statement: data });
-    }
+    //async getStatement() {
+    //    const response = await fetch('account/statement');
+    //    const data = await response.json();
+    //    this.setState({ statement: data });
+    //}
 }

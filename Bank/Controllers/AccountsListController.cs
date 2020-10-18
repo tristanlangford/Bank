@@ -46,5 +46,12 @@ namespace Bank.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetAccount(string id)
+        {
+            var _id = Int32.Parse(id);
+            return Ok(_accountRepository.GetAccount(_id));
+        }
+
     }
 }

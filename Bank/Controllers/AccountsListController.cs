@@ -33,7 +33,7 @@ namespace Bank.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(string Id)
+        public IActionResult Delete([FromBody]string Id)
         {
             var _Id = Int32.Parse(Id);
             var response = _accountRepository.DeleteAccount(_Id);

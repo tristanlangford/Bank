@@ -12,7 +12,8 @@ export default class App extends Component {
   render () {
     return (
       <Layout>
-        <Route exact path='/' component={AccountsList} />
+            <Route exact path='/' component={AccountsList} />
+            <Route exact path='/account/:id' component={Account} />
       </Layout>
     );
   }

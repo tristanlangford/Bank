@@ -11,6 +11,7 @@ export class AccountsList extends Component {
         };
 
         this.createNewAccount = this.createNewAccount.bind(this);
+        this.deleteAccount = this.deleteAccount.bind(this);
     }
 
     componentDidMount() {
@@ -21,9 +22,20 @@ export class AccountsList extends Component {
     formatAccountsList(accounts) {
         var formattedAccounts = [];
         for (let x = 0; x < accounts.length; x++) {
-            formattedAccounts.push(<li key={accounts[x]._Id}>{accounts[x]._Name}</li>)
+            formattedAccounts.push(<li key={accounts[x]._Id}><a href={"/account/" + accounts[x]._Id}>{accounts[x]._Name}</a><button value={accounts[x]._Id} onClick={this.deleteAccount}>Delete</button></li>)
         }
         return formattedAccounts
+    }
+
+    async deleteAccount(event) {
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(event.target.value)
+        };
+        const response = await fetch('accountslist', requestOptions);
+        const data = await response.json();
+        this.setState({ Accounts: data });
     }
 
     async createNewAccount(event) {
@@ -45,6 +57,7 @@ export class AccountsList extends Component {
                     <button onClick={this.createNewAccount}>Create</button>
                 </form>
                 {this.formatAccountsList(accounts)}
+                {console.log(this.state.findEvent)}
             </div>
         );
     }

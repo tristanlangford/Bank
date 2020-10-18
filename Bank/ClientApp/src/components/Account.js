@@ -49,12 +49,12 @@ export class Account extends Component {
                 <div className="balance">Balance: £{balance}</div>
                 <div className="actions">
                     <span className="deposit">Deposit: 
-                            <input type="number" onChange={this.setDepositValue} min='0' pattern="^\d*(\.\d{0,2})?$" value={this.state.depositValue}/>
-                            <button value="Confirm" onClick={this.deposit} value={this.state.depositValue}>Confirm</button>
+                            <input type="number" onChange={this.setDepositValue} min='0' />
+                            <button value="Confirm" onClick={this.deposit} >Confirm</button>
                     </span>
                     <span className="withdraw">Withdraw: 
-                            <input type="number" onChange={this.setWithdrawValue} min='0' pattern="^\d*(\.\d{0,2})?$" value={this.state.withdrawValue} />
-                            <button value="Confirm" onClick={this.withdraw} value={this.state.withdrawValue}>Confirm</button>
+                            <input type="number" onChange={this.setWithdrawValue} min='0' />
+                            <button value="Confirm" onClick={this.withdraw} >Confirm</button>
                         </span>
                     </div>
                 <div>
@@ -85,7 +85,7 @@ export class Account extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(event.target.value)
+            body: JSON.stringify(this.state.depositValue)
         };
         const response = await fetch('account/deposit', requestOptions);
         const data = await response.json();
@@ -97,7 +97,7 @@ export class Account extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(event.target.value)
+            body: JSON.stringify(this.state.withdrawValue)
         };
         const response = await fetch('account/withdraw', requestOptions);
         const data = await response.json();

@@ -1,0 +1,11 @@
+﻿ul {
+    list-style: none;
+    font-weight: bold;
+    text-align: left;
+    font-size: x-large;
+}
+
+ul button {
+    background: none;
+    border: none;
+}

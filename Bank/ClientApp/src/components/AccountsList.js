@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import './AccountList.css';
 
 export class AccountsList extends Component {
 
@@ -33,7 +34,9 @@ export class AccountsList extends Component {
                     Create New Account <input type="text" placeholder="Name" onChange={event => this.setState({ NewAccountName: event.target.value }) } />
                     <button onClick={this.createNewAccount}>Create</button>
                 </form>
-                {this.formatAccountsList(accounts)}
+                <ul>
+                    {this.formatAccountsList(accounts)}
+                </ul>
             </div>
         );
     }

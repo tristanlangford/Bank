@@ -27,10 +27,11 @@ export class Account extends Component {
         return formattedStatement
     }
 
-    renderAccount() {
+    renderAccount(account) {
         return (
             <div>
-                <div className="balance">Balance: £</div>
+                <h1>Account: {account._Name}</h1>
+                <div className="balance">Balance: £{account.balance}</div>
                 <div className="actions">
                     <span className="deposit">Deposit: 
                             <input type="number" min='0' />
@@ -44,7 +45,7 @@ export class Account extends Component {
                 <div>
                     <table>
                         <tbody>
-
+                            {this.formatStatement(account._Statement)}
                         </tbody>
                     </table>
                 </div>
@@ -55,11 +56,10 @@ export class Account extends Component {
     render() {
         let contents = this.state.Loading
             ? <p><em>Getting Account Details...</em></p>
-            : this.renderAccount();
+            : this.renderAccount(this.state.Account);
 
         return (
             <div className="account-container">
-                <h1 id="tabelLabel" >Your Bank Account</h1>
                 {contents}
             </div>
         );

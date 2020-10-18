@@ -15,6 +15,12 @@ namespace Bank.Models
         public int _Id
         { get; private set; }
 
+        public string[] _Statement
+        {
+            get { return Statement().ToArray(); }
+            private set { }
+        }
+
         public List<IInteraction> history = new List<IInteraction>();
         public IPrintStatement _printStatement;
 

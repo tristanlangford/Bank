@@ -47,10 +47,27 @@ namespace Bank.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetAccount(string id)
+        public IActionResult GetAccount(int id)
         {
-            var _id = Int32.Parse(id);
-            return Ok(_accountRepository.GetAccount(_id));
+            return Ok(_accountRepository.GetAccount(id));
+        }
+
+        [HttpPut("withdraw/{id}")]
+        public IActionResult withdrawal(int id, [FromBody] string value)
+        {
+            var _value = Int32.Parse(value);
+            var account = _accountRepository.GetAccount(id);
+            account.Withdraw(_value);
+            return Ok(_accountRepository.GetAccount(id));
+        }
+
+        [HttpPut("deposit/{id}")]
+        public IActionResult deposit(int id, [FromBody] string value)
+        {
+            var _value = Int32.Parse(value);
+            var account = _accountRepository.GetAccount(id);
+            account.Deposit(_value);
+            return Ok(_accountRepository.GetAccount(id));
         }
 
     }

@@ -8,8 +8,10 @@ export class Account extends Component {
         this.state = {
             Account: null,
             Loading: true,
+            value: 0,
         };
-
+        this.withdrawal = this.withdrawal.bind(this)
+        this.deposit = this.deposit.bind(this)
     }
 
     componentDidMount() {
@@ -27,6 +29,28 @@ export class Account extends Component {
         return formattedStatement
     }
 
+    async withdrawal(event) {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.state.value)
+        };
+        const response = await fetch(`accountslist/withdraw/${this.props.match.params.id}`, requestOptions);
+        const data = await response.json();
+        this.setState({ Account: data });
+    }
+
+    async deposit(event) {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.state.value)
+        };
+        const response = await fetch(`accountslist/deposit/${this.props.match.params.id}`, requestOptions);
+        const data = await response.json();
+        this.setState({ Account: data });
+    }
+ 
     renderAccount(account) {
         return (
             <div>
@@ -34,13 +58,14 @@ export class Account extends Component {
                 <div className="balance">Balance: £{account.balance}</div>
                 <div className="actions">
                     <span className="deposit">Deposit: 
-                            <input type="number" min='0' />
-                            <button value="Confirm" >Confirm</button>
+                            <button value="Confirm" onClick={this.deposit}>Confirm</button>
                     </span>
-                    <span className="withdraw">Withdraw: 
-                            <input type="number" min='0' />
-                            <button value="Confirm" >Confirm</button>
-                        </span>
+                    <span>
+                        <input type="number" min='0' onChange={event => this.setState({ value: event.target.value })} />
+                    </span>
+                    <span className="withdraw">Withdraw:
+                            <button value="Confirm" onClick={this.withdrawal}>Confirm</button>
+                    </span>
                     </div>
                 <div>
                     <table>
@@ -69,42 +94,6 @@ export class Account extends Component {
         var id = this.props.match.params.id
         const response = await fetch(`accountslist/${id}`);
         const data = await response.json();
-        console.log(data)
         this.setState({ Account: data, Loading: false });
     }
-    //async deposit(event) {
-    //    const requestOptions = {
-    //        method: 'POST',
-    //        headers: { 'Content-Type': 'application/json' },
-    //        body: JSON.stringify(this.state.depositValue)
-    //    };
-    //    const response = await fetch('account/deposit', requestOptions);
-    //    const data = await response.json();
-    //    this.setState({ balance: data, depositValue: 0 });
-    //    this.getStatement()
-    //}
-
-    //async withdraw(event) {
-    //    const requestOptions = {
-    //        method: 'POST',
-    //        headers: { 'Content-Type': 'application/json' },
-    //        body: JSON.stringify(this.state.withdrawValue)
-    //    };
-    //    const response = await fetch('account/withdraw', requestOptions);
-    //    const data = await response.json();
-    //    this.setState({ balance: data, withdrawValue: 0 });
-    //    this.getStatement()
-    //}
-
-    //async getBalance() {
-    //    const response = await fetch('account');
-    //    const data = await response.json();
-    //    this.setState({ balance: data, loading: false });
-    //}
-
-    //async getStatement() {
-    //    const response = await fetch('account/statement');
-    //    const data = await response.json();
-    //    this.setState({ statement: data });
-    //}
 }

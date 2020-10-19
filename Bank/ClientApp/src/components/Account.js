@@ -37,28 +37,6 @@ export class Account extends Component {
         line.forEach(i => tableRow.push(<td>{i}</td >));
         return (<tr>{tableRow}</tr>)
     }
-
-    async withdrawal(event) {
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.valueToTwoDecimals(this.state.value))
-        };
-        const response = await fetch(`accountslist/withdraw/${this.props.match.params.id}`, requestOptions);
-        const data = await response.json();
-        this.setState({ Account: data });
-    }
-
-    async deposit(event) {
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.valueToTwoDecimals(this.state.value))
-        };
-        const response = await fetch(`accountslist/deposit/${this.props.match.params.id}`, requestOptions);
-        const data = await response.json();
-        this.setState({ Account: data });
-    }
  
     renderAccount(account) {
         return (
@@ -105,4 +83,27 @@ export class Account extends Component {
         const data = await response.json();
         this.setState({ Account: data, Loading: false });
     }
+
+    async withdrawal(event) {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.valueToTwoDecimals(this.state.value))
+        };
+        const response = await fetch(`accountslist/withdraw/${this.props.match.params.id}`, requestOptions);
+        const data = await response.json();
+        this.setState({ Account: data });
+    }
+
+    async deposit(event) {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.valueToTwoDecimals(this.state.value))
+        };
+        const response = await fetch(`accountslist/deposit/${this.props.match.params.id}`, requestOptions);
+        const data = await response.json();
+        this.setState({ Account: data });
+    }
+
 }

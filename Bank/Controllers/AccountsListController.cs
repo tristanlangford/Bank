@@ -9,6 +9,7 @@ namespace Bank.Controllers
     public class AccountsListController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;
+
         public AccountsListController(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
@@ -18,6 +19,12 @@ namespace Bank.Controllers
         public IActionResult GetAll()
         {
             return Ok(_accountRepository.GetAll());
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetAccount(int id)
+        {
+            return Ok(_accountRepository.GetAccount(id));
         }
 
         [HttpPost]
@@ -39,12 +46,6 @@ namespace Bank.Controllers
             {
                 return BadRequest();
             }
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetAccount(int id)
-        {
-            return Ok(_accountRepository.GetAccount(id));
         }
 
         [HttpPut("withdraw/{id}")]

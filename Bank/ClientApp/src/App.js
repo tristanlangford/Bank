@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Account } from './components/Account';
-import { AccountsList } from './components/AccountsList'
+import { Layout } from './components/Layout/Layout';
+import { Account } from './components/Account/Account';
+import { AccountsList } from './components/AccountsList/AccountsList'
 
 import './custom.css'
 

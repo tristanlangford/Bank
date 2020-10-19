@@ -24,14 +24,22 @@ namespace Bank.Controllers
         [HttpGet("{id}")]
         public IActionResult GetAccount(int id)
         {
-            return Ok(_accountRepository.GetAccount(id));
+            var response = _accountRepository.GetAccount(id);
+            if (response != null)
+            {
+                return Ok(response);
+            } else
+            {
+                return NotFound();
+            }
+            
         }
 
         [HttpPost]
         public IActionResult Create([FromBody]string name)
         {
-            _accountRepository.NewAccount(name);
-            return Ok(_accountRepository.GetAll());
+            var response = _accountRepository.NewAccount(name);
+            return Ok(response);
         }
 
         [HttpDelete]
@@ -44,7 +52,7 @@ namespace Bank.Controllers
                 return Ok(_accountRepository.GetAll());
             } else
             {
-                return BadRequest();
+                return NotFound();
             }
         }
 
@@ -53,8 +61,15 @@ namespace Bank.Controllers
         {
             var value = Convert.ToDecimal(_value);
             var account = _accountRepository.GetAccount(id);
-            account.Withdraw(value);
-            return Ok(_accountRepository.GetAccount(id));
+            if (account != null)
+            {
+                account.Withdraw(value);
+                return Ok(_accountRepository.GetAccount(id));
+            } else
+            {
+                return NotFound();
+            }
+            
         }
 
         [HttpPut("deposit/{id}")]
@@ -62,8 +77,14 @@ namespace Bank.Controllers
         {
             var _value = Convert.ToDecimal(value);
             var account = _accountRepository.GetAccount(id);
-            account.Deposit(_value);
-            return Ok(_accountRepository.GetAccount(id));
+            if (account != null)
+            {
+                account.Deposit(_value);
+                return Ok(_accountRepository.GetAccount(id));
+            } else
+            {
+                return NotFound();
+            }
         }
 
     }

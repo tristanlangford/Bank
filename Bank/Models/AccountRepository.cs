@@ -26,12 +26,12 @@ namespace Bank.Models
            return _Accounts.Find(account => account._Id == Id);
         }
 
-        public IAccount NewAccount(string name)
+        public IAccount[] NewAccount(string name)
         {
             var NewAccount = new Account(IdCount, name);
             _Accounts.Add(NewAccount);
             IdCount++;
-            return NewAccount;
+            return _Accounts.ToArray();
         }
 
         public bool DeleteAccount(int Id)

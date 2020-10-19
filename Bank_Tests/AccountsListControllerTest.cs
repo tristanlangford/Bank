@@ -63,7 +63,7 @@ namespace Bank_Tests
         {
             _accountRepository.Setup(m => m.DeleteAccount(1)).Returns(false);
             var response = accountsListController.Delete("1");
-            response.Should().BeOfType<BadRequestResult>();
+            response.Should().BeOfType<NotFoundResult>();
         }
     }
 }

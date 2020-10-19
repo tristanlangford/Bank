@@ -9,6 +9,7 @@ namespace Bank_Tests
     public class AccountRepositoryTest
     {
         public IAccountRepository accountRepository;
+
         public AccountRepositoryTest()
         {
             accountRepository = new AccountRepository();
@@ -34,6 +35,13 @@ namespace Bank_Tests
         {
             var account = accountRepository.GetAccount(2);
             Assert.Equal("Business", account._Name);
+        }
+
+        [Fact]
+        public void ReturnsFalseWhenNoAccount()
+        {
+            var account = accountRepository.GetAccount(10);
+            Assert.Null(account);
         }
 
         [Fact]

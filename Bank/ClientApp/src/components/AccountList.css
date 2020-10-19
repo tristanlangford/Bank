@@ -5,7 +5,28 @@
     font-size: x-large;
 }
 
-ul button {
-    background: none;
+button {
+    background-color: blue;
     border: none;
+    color: white;
+    border-radius: 6px;
+}
+
+.new-account-input {
+    margin-left: 1em;
+    width: 8em;
+    max-width: 40em;
+    margin-bottom: 1em;
+}
+
+.delete {
+    font-size: small;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: red;
+}
+
+.balance {
+    font-size: large;
+    font-weight: normal;
 }

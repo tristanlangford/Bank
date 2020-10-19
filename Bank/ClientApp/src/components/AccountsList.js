@@ -22,7 +22,17 @@ export class AccountsList extends Component {
     formatAccountsList(accounts) {
         var formattedAccounts = [];
         for (let x = 0; x < accounts.length; x++) {
-            formattedAccounts.push(<li key={accounts[x]._Id}><a href={"/account/" + accounts[x]._Id}>{accounts[x]._Name}</a><button value={accounts[x]._Id} onClick={this.deleteAccount}>Delete</button></li>)
+            formattedAccounts.push(<li key={accounts[x]._Id}>
+                <a href={"/account/" + accounts[x]._Id}>
+                    {accounts[x]._Name}
+                </a>
+                <span className="balance" >
+                    Balance: £{accounts[x].balance}
+                </span>
+                <button className="delete" value={accounts[x]._Id} onClick={this.deleteAccount}>
+                    Delete
+                </button>
+            </li>)
         }
         return formattedAccounts
     }
@@ -30,10 +40,11 @@ export class AccountsList extends Component {
     renderAccountsList(accounts) {
         return (
             <div>
-                <form>
-                    Create New Account <input type="text" placeholder="Name" onChange={event => this.setState({ NewAccountName: event.target.value }) } />
+                Create New Account:
+                <input className="new-account-input" type="text" placeholder="Name" onChange={event => this.setState({ NewAccountName: event.target.value })} />
+                <div>
                     <button onClick={this.createNewAccount}>Create</button>
-                </form>
+                </div>
                 <ul>
                     {this.formatAccountsList(accounts)}
                 </ul>

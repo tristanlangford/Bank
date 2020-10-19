@@ -22,17 +22,20 @@ export class AccountsList extends Component {
     formatAccountsList(accounts) {
         var formattedAccounts = [];
         for (let x = 0; x < accounts.length; x++) {
-            formattedAccounts.push(<li key={accounts[x]._Id}>
-                <a href={"/account/" + accounts[x]._Id}>
-                    {accounts[x]._Name}
-                </a>
-                <span className="balance" >
-                    Balance: £{accounts[x].balance}
-                </span>
-                <button className="delete" value={accounts[x]._Id} onClick={this.deleteAccount}>
-                    Delete
-                </button>
-            </li>)
+            formattedAccounts.push(
+            <div key={accounts[x]._Id} >
+                <li>
+                    <a href={"/account/" + accounts[x]._Id}>
+                        {accounts[x]._Name}
+                    </a>
+                    <span className="balance" >
+                        Balance: £{accounts[x].balance}
+                    </span>
+                    <button className="delete" value={accounts[x]._Id} onClick={this.deleteAccount}>
+                        Delete
+                    </button>
+                </li>
+            </div>)
         }
         return formattedAccounts
     }
@@ -41,7 +44,7 @@ export class AccountsList extends Component {
         return (
             <div>
                 Create New Account:
-                <input className="new-account-input" type="text" placeholder="Name" onChange={event => this.setState({ NewAccountName: event.target.value })} />
+                <input className="new-account-input" type="text" placeholder="Name" onChange={event => this.setState({ NewAccountName: event.target.value })} value={this.state.NewAccountName} />
                 <div>
                     <button onClick={this.createNewAccount}>Create</button>
                 </div>
@@ -79,7 +82,7 @@ export class AccountsList extends Component {
         };
         const response = await fetch('accountslist', requestOptions);
         const data = await response.json();
-        this.setState({ Accounts: data });
+        this.setState({ Accounts: data, NewAccountName: "" });
     }
 
     async deleteAccount(event) {

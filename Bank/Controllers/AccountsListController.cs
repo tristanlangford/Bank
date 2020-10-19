@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Bank.Models.Interfaces;
-using Bank.Models;
-using Microsoft.Extensions.Logging;
 
 namespace Bank.Controllers
 {
@@ -33,10 +28,10 @@ namespace Bank.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete([FromBody]string Id)
+        public IActionResult Delete([FromBody]string _Id)
         {
-            var _Id = Int32.Parse(Id);
-            var response = _accountRepository.DeleteAccount(_Id);
+            var Id = Int32.Parse(_Id);
+            var response = _accountRepository.DeleteAccount(Id);
             if (response)
             {
                 return Ok(_accountRepository.GetAll());
@@ -53,18 +48,18 @@ namespace Bank.Controllers
         }
 
         [HttpPut("withdraw/{id}")]
-        public IActionResult withdrawal(int id, [FromBody] string value)
+        public IActionResult withdrawal(int id, [FromBody] string _value)
         {
-            var _value = Int32.Parse(value);
+            var value = Convert.ToDecimal(_value);
             var account = _accountRepository.GetAccount(id);
-            account.Withdraw(_value);
+            account.Withdraw(value);
             return Ok(_accountRepository.GetAccount(id));
         }
 
         [HttpPut("deposit/{id}")]
         public IActionResult deposit(int id, [FromBody] string value)
         {
-            var _value = Int32.Parse(value);
+            var _value = Convert.ToDecimal(value);
             var account = _accountRepository.GetAccount(id);
             account.Deposit(_value);
             return Ok(_accountRepository.GetAccount(id));

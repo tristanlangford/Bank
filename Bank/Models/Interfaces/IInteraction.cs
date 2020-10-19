@@ -3,9 +3,9 @@ namespace Bank.Models.Interfaces
 {
     public interface IInteraction
     {
-        public double GetOldBalance();
+        public decimal GetOldBalance();
 
-        public double GetNewBalance();
+        public decimal GetNewBalance();
 
         public string GetDate();
 

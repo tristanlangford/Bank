@@ -19,22 +19,30 @@ export class Account extends Component {
         this.getAccount()
     }
 
+    valueToTwoDecimals(value) {
+        return (Math.round(value * 100) / 100).toFixed(2);
+    }
+
     formatStatement(statement) {
         var formattedStatement = [];
         for (let x = 0; x < statement.length; x++) {
             var brokenLine = statement[x].split("||");
-            var tableRow = []
-            brokenLine.forEach(i => tableRow.push(<td> {i}</td >));
-            formattedStatement.push(<tr>{tableRow}</tr>)
+            formattedStatement.push(this.statementTableRow(brokenLine))
         }
         return formattedStatement
+    }
+
+    statementTableRow(line) {
+        var tableRow = []
+        line.forEach(i => tableRow.push(<td>{i}</td >));
+        return (<tr>{tableRow}</tr>)
     }
 
     async withdrawal(event) {
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.state.value)
+            body: JSON.stringify(this.valueToTwoDecimals(this.state.value))
         };
         const response = await fetch(`accountslist/withdraw/${this.props.match.params.id}`, requestOptions);
         const data = await response.json();
@@ -45,7 +53,7 @@ export class Account extends Component {
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.state.value)
+            body: JSON.stringify(this.valueToTwoDecimals(this.state.value))
         };
         const response = await fetch(`accountslist/deposit/${this.props.match.params.id}`, requestOptions);
         const data = await response.json();

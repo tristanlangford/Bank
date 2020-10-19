@@ -5,15 +5,15 @@ namespace Bank.Models
 {
     public class Interaction : IInteraction
     {
-        private readonly double _OldBalance;
+        private readonly decimal _OldBalance;
 
-        private readonly double _NewBalance;
+        private readonly decimal _NewBalance;
 
         private readonly string Date;
 
         private readonly Func<DateTime> _DateTimeProvider;
 
-        public Interaction(double value, double oldBalance, Func<DateTime> DateTimeProvider)
+        public Interaction(decimal value, decimal oldBalance, Func<DateTime> DateTimeProvider)
         {
             _OldBalance = oldBalance;
             _NewBalance = _OldBalance + value;
@@ -21,12 +21,12 @@ namespace Bank.Models
             Date = _DateTimeProvider().ToString("dd/MM/yyyy");
         }
 
-        public double GetOldBalance()
+        public decimal GetOldBalance()
         {
             return Math.Round(_OldBalance, 2);
         }
 
-        public double GetNewBalance()
+        public decimal GetNewBalance()
         {
             return Math.Round(_NewBalance, 2);
         }

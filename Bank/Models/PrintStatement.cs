@@ -25,7 +25,7 @@ namespace Bank.Models
             return Statement;
         }
 
-        private double GetValue(IInteraction interaction)
+        private decimal GetValue(IInteraction interaction)
         {
             return interaction.GetNewBalance() - interaction.GetOldBalance();
         }

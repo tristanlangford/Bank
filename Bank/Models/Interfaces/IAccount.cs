@@ -4,7 +4,7 @@ namespace Bank.Models.Interfaces
 {
     public interface IAccount
     {
-        public double Balance
+        public decimal Balance
         { get; }
 
         public string _Name
@@ -13,9 +13,9 @@ namespace Bank.Models.Interfaces
         public int _Id
         { get; }
 
-        public void Deposit(double value);
+        public void Deposit(decimal value);
 
-        public void Withdraw(double value);
+        public void Withdraw(decimal value);
 
         public List<string> Statement();
     }

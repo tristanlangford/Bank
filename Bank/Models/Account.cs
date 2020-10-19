@@ -6,7 +6,7 @@ namespace Bank.Models
 {
     public class Account : IAccount
     {
-        public double Balance
+        public decimal Balance
         { get; private set; }
 
         public string _Name
@@ -29,7 +29,7 @@ namespace Bank.Models
             _Id = Id;
             _Name = Name;
 
-            Balance = 0;
+            Balance = 0.00m;
             if (printStatement == null)
             {
                 _printStatement = new PrintStatement();
@@ -39,7 +39,7 @@ namespace Bank.Models
             }
         }
 
-        public void Deposit(double value)
+        public void Deposit(decimal value)
         {
             if(value <= 0)
             {
@@ -51,7 +51,7 @@ namespace Bank.Models
             }
         }
 
-        public void Withdraw(double value)
+        public void Withdraw(decimal value)
         {
             if (value <= 0)
             {

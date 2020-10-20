@@ -53,5 +53,5 @@ date || credit || debit || balance
 ```
 ## Example Screenshots
 
-![Example Screenshot1](images/BankScreenshotHome.jpg)
-![Example Screenshot2](images/BankScreenshotAccount.jpg)
+![Example Screenshot1](Images/BankScreenshotHome.jpg)
+![Example Screenshot2](Images/BankScreenshotAccount.jpg)

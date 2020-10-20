@@ -23,6 +23,8 @@ It allows you to create & delete accounts, deposit, withdraw, and see statements
 
    ```shell
    dotnet test ./Bank_Tests
+   cd ./Bank/ClientApp
+   npm test
    ```
 4. Run the Program:
 

@@ -8,13 +8,16 @@ namespace Bank_Tests
 {
     public class AccountRepositoryTest
     {
-        public IAccountRepository accountRepository;
+        private IAccountRepository accountRepository;
+
+        private Mock<IPrintStatement> printStatementMock;
 
         public AccountRepositoryTest()
         {
             accountRepository = new AccountRepository();
-            accountRepository.NewAccount("Personal");
-            accountRepository.NewAccount("Business");
+            printStatementMock = new Mock<IPrintStatement>();
+            accountRepository.NewAccount("Personal", printStatementMock.Object);
+            accountRepository.NewAccount("Business", printStatementMock.Object);
         }
 
         [Fact]
@@ -26,7 +29,7 @@ namespace Bank_Tests
         [Fact]
         public void AddsAccount()
         {
-            accountRepository.NewAccount("Tristan's");
+            accountRepository.NewAccount("Tristan's", printStatementMock.Object);
             Assert.Equal("Tristan's", accountRepository.GetAccount(3)._Name);
         }
 

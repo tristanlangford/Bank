@@ -10,9 +10,12 @@ namespace Bank.Controllers
     {
         private readonly IAccountRepository _accountRepository;
 
-        public AccountsListController(IAccountRepository accountRepository)
+        private readonly IPrintStatement _printStatement;
+
+        public AccountsListController(IAccountRepository accountRepository, IPrintStatement printStatement)
         {
             _accountRepository = accountRepository;
+            _printStatement = printStatement;
         }
 
         [HttpGet]
@@ -38,7 +41,7 @@ namespace Bank.Controllers
         [HttpPost]
         public IActionResult Create([FromBody]string name)
         {
-            var response = _accountRepository.NewAccount(name);
+            var response = _accountRepository.NewAccount(name, _printStatement);
             return Ok(response);
         }
 

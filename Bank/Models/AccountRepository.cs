@@ -26,9 +26,9 @@ namespace Bank.Models
            return _Accounts.Find(account => account._Id == Id);
         }
 
-        public IAccount[] NewAccount(string name)
+        public IAccount[] NewAccount(string name, IPrintStatement printStatement)
         {
-            var NewAccount = new Account(IdCount, name);
+            var NewAccount = new Account(IdCount, name, printStatement);
             _Accounts.Add(NewAccount);
             IdCount++;
             return _Accounts.ToArray();

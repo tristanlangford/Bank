@@ -11,16 +11,20 @@ namespace Bank_Tests
     public class AccountsListControllerTest
     {
         Mock<IAccountRepository> _accountRepository;
+        Mock<IPrintStatement> _PrintStatementMock;
         AccountsListController accountsListController;
        
         public AccountsListControllerTest()
         {
+            _PrintStatementMock = new Mock<IPrintStatement>();
+
             _accountRepository = new Mock<IAccountRepository>();
             _accountRepository.Setup(m => m.GetAll());
             _accountRepository.Setup(m => m.GetAccount(3));
-            _accountRepository.Setup(m => m.NewAccount("test"));
+            _accountRepository.Setup(m => m.NewAccount("test", _PrintStatementMock.Object));
             _accountRepository.Setup(m => m.DeleteAccount(1)).Returns(true);
-            accountsListController = new AccountsListController(_accountRepository.Object);
+
+            accountsListController = new AccountsListController(_accountRepository.Object, _PrintStatementMock.Object);
         }
 
         [Fact]
@@ -41,7 +45,7 @@ namespace Bank_Tests
         public void NewAccountGetsCalled()
         {
             accountsListController.Create("test");
-            _accountRepository.Verify(p => p.NewAccount("test"), Times.Once());
+            _accountRepository.Verify(p => p.NewAccount("test", _PrintStatementMock.Object), Times.Once());
         }
 
         [Fact]

@@ -2,7 +2,7 @@
 using Xunit;
 using Bank.Models;
 
-namespace Bank_Tech_Test_C_Unit_Tests
+namespace Bank_Tests
 {
     public class InteractionTest
     {

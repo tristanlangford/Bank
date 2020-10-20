@@ -5,7 +5,7 @@ using Bank.Models;
 using Bank.Models.Interfaces;
 using Moq;
 
-namespace Bank_Tech_Test_C_Unit_Tests
+namespace Bank_Tests
 {
     public class AccountTest
     {

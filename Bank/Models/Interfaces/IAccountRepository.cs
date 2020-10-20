@@ -11,7 +11,7 @@ namespace Bank.Models.Interfaces
 
         public IAccount GetAccount(int id);
 
-        public IAccount[] NewAccount(string name);
+        public IAccount[] NewAccount(string name, IPrintStatement printStatement);
 
         public bool DeleteAccount(int id);
     }

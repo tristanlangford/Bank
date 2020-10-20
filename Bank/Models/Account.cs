@@ -25,19 +25,14 @@ namespace Bank.Models
 
         public IPrintStatement _printStatement;
 
-        public Account(int Id, string Name, IPrintStatement printStatement = null)
+        public Account(int Id, string Name, IPrintStatement printStatement)
         {
             _Id = Id;
             _Name = Name;
 
             Balance = 0.00m;
-            if (printStatement == null)
-            {
-                _printStatement = new PrintStatement();
-            } else
-            {
-                _printStatement = printStatement;
-            }
+            _printStatement = printStatement;
+
         }
 
         public void Deposit(decimal value)

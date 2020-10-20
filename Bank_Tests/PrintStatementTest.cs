@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Xunit;
 using Moq;
 
-namespace Bank_Tech_Test_C_Unit_Tests
+namespace Bank_Tests
 {
     public class PrintStatementTest
     {

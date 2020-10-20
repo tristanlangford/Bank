@@ -9,53 +9,117 @@ import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() })
 
-const accountMock = [{
-    _Name: "test",
-    _Id: 1,
-    balance: 10
-}]
+describe("AccountList", function(){
 
-// global.fetch = jest.fn(() =>
-//   Promise.resolve({
-//     json: () => Promise.resolve(accountMock),
-//   })
-// );
+    const accountMock = [{
+        _Name: "test",
+        _Id: 1,
+        balance: 10
+    }]
 
-it("sets account to state following api request", function() {
-    const accountList = shallow(<AccountsList />);
-    expect(accountList.state('Accounts')).toEqual([])
-    expect(accountList.state('Loading')).toBe(true)
+    let wrapper;
+    
+    beforeAll(function() {
+        global.fetch = jest.fn();
+    })
+
+    beforeEach(function() {
+        wrapper = shallow(
+            <AccountsList/>
+        )
+    });
+
+    afterEach(() => {
+        wrapper.unmount();
+     });
+
+    it("renders the correct account details", function() {
+        wrapper.setState({ Accounts: accountMock, Loading: false })
+        expect(wrapper.find('.balance').text()).toContain("10")
+        expect(wrapper.find('.account-link').text()).toEqual("test")
+    })
+
+    it("starts with the correct state", function() {
+        expect(wrapper.state('Accounts')).toEqual([])
+        expect(wrapper.state('Loading')).toBe(true)
+    })
+
+    it("update accounts on component call", (done) => {
+
+        const spyDidMount = jest.spyOn(AccountsList.prototype,"getAccountsList");
+        fetch.mockImplementation(() => {
+            return Promise.resolve({
+                status: 200,
+                json: () => {
+                return Promise.resolve(accountMock);
+                }
+            });
+        });
+        const didMount = wrapper.instance().getAccountsList();
+
+        expect(spyDidMount).toHaveBeenCalled();
+
+        didMount.then(() => {
+            // updating the wrapper
+            wrapper.update();
+            expect(wrapper.state('Accounts')).toEqual(accountMock)
+            spyDidMount.mockRestore();
+            fetch.mockClear();
+            done();
+       });
+    })
+
+    it("update accounts on new account creation", (done) => {
+
+        const spyDidMount = jest.spyOn(AccountsList.prototype,"createNewAccount");
+        fetch.mockImplementation(() => {
+            return Promise.resolve({
+                status: 200,
+                json: () => {
+                return Promise.resolve(accountMock);
+                }
+            });
+        });
+        const didMount = wrapper.instance().createNewAccount();
+
+        //expect(spyDidMount).toHaveBeenCalled();
+
+        didMount.then(() => {
+            // updating the wrapper
+            wrapper.update();
+            expect(wrapper.state('Accounts')).toEqual(accountMock)
+            spyDidMount.mockRestore();
+            fetch.mockClear();
+            done();
+       });
+    })
+
+    it("update accounts on delete", (done) => {
+
+        const spyDidMount = jest.spyOn(AccountsList.prototype,"deleteAccount");
+        fetch.mockImplementation(() => {
+            return Promise.resolve({
+                status: 200,
+                json: () => {
+                return Promise.resolve(accountMock);
+                }
+            });
+        });
+        const didMount = wrapper.instance().deleteAccount({target: {value: 1}});
+
+        //expect(spyDidMount).toHaveBeenCalled();
+
+        didMount.then(() => {
+            // updating the wrapper
+            wrapper.update();
+            expect(wrapper.state('Accounts')).toEqual(accountMock)
+            spyDidMount.mockRestore();
+            fetch.mockClear();
+            done();
+       });
+    })
+    
+    
+    
+
 })
-
-// describe('AccountList', function() {
-
-//     let accountList;
-//     const account1 = {
-//         _Name: "test",
-//         _Id: 1,
-//         balance: 10
-//     }
-//     const accountArray = [account1]
-
-//     beforeEach(function() {
-        
-//     })
-
-//     it('formats Accounts', function() {
-//         var expectedOutcome = [<div><li><a href="/account/1">test</a><span className="balance">Balance: £10</span><button className="delete" value={1}>Delete</button></li></div>, (<div key={2} >
-//                 <li>
-//                     <a href={"/account/2"}>
-//                         {"test2"}
-//                     </a>
-//                     <span className="balance" >
-//                         Balance: £{3}
-//                     </span>
-//                     <button className="delete" onClick={this.deleteAccount} value={2}>
-//                         Delete
-//                     </button>
-//                 </li>
-//             </div>)]
-        
-//         expect(new AccountsList().formatAccountsList(accountArray)[0]).toEqual(expectedOutcome[0])
-//     })
-// })

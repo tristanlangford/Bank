@@ -16,7 +16,7 @@ export class AccountsList extends Component {
     }
 
     componentDidMount() {
-        this.getAccountsList();
+            this.getAccountsList();
     }
 
     formatAccountsList(accounts) {
@@ -25,7 +25,7 @@ export class AccountsList extends Component {
             formattedAccounts.push(
             <div key={accounts[x]._Id} >
                 <li>
-                    <a href={"/account/" + accounts[x]._Id}>
+                    <a className="account-link" href={"/account/" + accounts[x]._Id}>
                         {accounts[x]._Name}
                     </a>
                     <span className="balance" >

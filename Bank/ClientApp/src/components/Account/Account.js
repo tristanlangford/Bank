@@ -34,8 +34,8 @@ export class Account extends Component {
 
     statementTableRow(line) {
         var tableRow = []
-        line.forEach(i => tableRow.push(<td>{i}</td >));
-        return (<tr>{tableRow}</tr>)
+        line.forEach(i => tableRow.push(<td key={1}>{i}</td >));
+        return (<tr key={1}>{tableRow}</tr>)
     }
  
     renderAccount(account) {

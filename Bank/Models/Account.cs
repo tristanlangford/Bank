@@ -22,6 +22,7 @@ namespace Bank.Models
         }
 
         public List<IInteraction> history = new List<IInteraction>();
+
         public IPrintStatement _printStatement;
 
         public Account(int Id, string Name, IPrintStatement printStatement = null)

@@ -23,12 +23,12 @@ namespace Bank.Models
 
         public decimal GetOldBalance()
         {
-            return Math.Round(_OldBalance, 2);
+            return _OldBalance;
         }
 
         public decimal GetNewBalance()
         {
-            return Math.Round(_NewBalance, 2);
+            return _NewBalance;
         }
 
         public string GetDate()
